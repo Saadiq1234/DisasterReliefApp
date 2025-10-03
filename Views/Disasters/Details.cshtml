@@ -1,0 +1,13 @@
+@model DisasterReliefApp.Models.Disaster
+
+<h2>@Model.Title</h2>
+<p><strong>Location:</strong> @Model.Location</p>
+<p><strong>Severity:</strong> @Model.Severity</p>
+<p><strong>Occurred At:</strong> @Model.OccurredAt.ToLocalTime().ToString("g")</p>
+<p>@Model.Description</p>
+@if (!string.IsNullOrEmpty(Model.EvidenceUrl))
+{
+    <div>
+        <a href="@Model.EvidenceUrl" target="_blank">View Evidence</a>
+    </div>
+}

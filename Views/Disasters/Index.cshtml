@@ -1,0 +1,30 @@
+@model IEnumerable<DisasterReliefApp.Models.Disaster>
+
+<h2>Disaster Reports</h2>
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto"><input name="location" class="form-control" placeholder="Location" /></div>
+    <div class="col-auto">
+        <select asp-for="Severity" class="form-select">
+            @foreach (var s in Enum.GetValues(typeof(DisasterReliefApp.Models.SeverityLevel)))
+            {
+                <option value="@((int)s)">@s</option>
+            }
+        </select>
+
+    </div>
+    <div class="col-auto"><button class="btn btn-primary">Filter</button></div>
+</form>
+
+<table class="table">
+    <thead><tr><th>Title</th><th>Location</th><th>Severity</th><th>Reported</th></tr></thead>
+    <tbody>
+        @foreach(var d in Model) {
+            <tr>
+                <td><a asp-action="Details" asp-route-id="@d.Id">@d.Title</a></td>
+                <td>@d.Location</td>
+                <td>@d.Severity</td>
+                <td>@d.CreatedAt.ToLocalTime().ToString("g")</td>
+            </tr>
+        }
+    </tbody>
+</table>

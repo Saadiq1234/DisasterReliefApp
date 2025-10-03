@@ -1,0 +1,9 @@
+<h2>Admin Dashboard</h2>
+<div class="row">
+    <div class="col-md-3 card p-3">Total Reports: @((ViewBag.Stats as dynamic).TotalDisasters)</div>
+    <div class="col-md-3 card p-3">Total Donations: @((ViewBag.Stats as dynamic).TotalDonations)</div>
+    <div class="col-md-3 card p-3">Volunteers: @((ViewBag.Stats as dynamic).TotalVolunteers)</div>
+    <div class="col-md-3 card p-3">Tasks: @((ViewBag.Stats as dynamic).TotalTasks)</div>
+</div>
+
+<p><a class="btn btn-primary" href="/Admin/Reports">View Reports</a></p>

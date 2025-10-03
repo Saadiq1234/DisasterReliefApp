@@ -1,0 +1,28 @@
+@model DisasterReliefApp.Models.Donation
+
+<h2>Make a Donation</h2>
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label>Category</label>
+        <select asp-for="Severity" class="form-select">
+            @foreach (var s in Enum.GetValues(typeof(DisasterReliefApp.Models.SeverityLevel)))
+            {
+                <option value="@((int)s)">@s</option>
+            }
+        </select>
+
+    </div>
+    <div class="mb-3">
+        <label>Description</label>
+        <input asp-for="Description" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Quantity (if applicable)</label>
+        <input asp-for="Quantity" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Amount (if money)</label>
+        <input asp-for="Amount" class="form-control" />
+    </div>
+    <button class="btn btn-primary">Submit</button>
+</form>

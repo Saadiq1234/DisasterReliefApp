@@ -1,0 +1,36 @@
+@model DisasterReliefApp.Models.Disaster
+
+<h2>Create Disaster Report</h2>
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Location</label>
+        <input asp-for="Location" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Occurred At</label>
+        <input asp-for="OccurredAt" type="datetime-local" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Severity</label>
+        <select asp-for="Severity" class="form-select">
+            @foreach (var s in Enum.GetValues(typeof(DisasterReliefApp.Models.SeverityLevel)))
+            {
+                <option value="@((int)s)">@s</option>
+            }
+        </select>
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Evidence (image/pdf)</label>
+        <input type="file" name="evidence" class="form-control" />
+    </div>
+    <button class="btn btn-primary">Submit</button>
+</form>

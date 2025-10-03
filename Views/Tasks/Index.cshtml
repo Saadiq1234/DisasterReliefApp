@@ -1,0 +1,22 @@
+@model IEnumerable<DisasterReliefApp.Models.TaskAssignment>
+
+<h2>Available Tasks</h2>
+<table class="table">
+    <thead><tr><th>Title</th><th>Scheduled</th><th>Location</th><th>Status</th><th>Action</th></tr></thead>
+    <tbody>
+        @foreach(var t in Model) {
+            <tr>
+                <td>@t.Title</td>
+                <td>@t.ScheduledAt?.ToLocalTime().ToString("g")</td>
+                <td>@t.Location</td>
+                <td>@t.Status</td>
+                <td>
+                    @if (User.IsInRole("Volunteer"))
+                    {
+                        <a asp-action="SignUp" asp-route-id="@t.Id" class="btn btn-sm btn-primary">Sign Up</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

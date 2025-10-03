@@ -1,0 +1,23 @@
+@model IEnumerable<DisasterReliefApp.Models.Donation>
+
+<h2>Donations</h2>
+<table class="table">
+    <thead><tr><th>Category</th><th>Qty</th><th>Amount</th><th>Donor</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>
+        @foreach(var d in Model) {
+            <tr>
+                <td>@d.Category</td>
+                <td>@d.Quantity</td>
+                <td>@d.Amount</td>
+                <td>@d.Donor?.FullName ?? d.DonorId</td>
+                <td>@d.Status</td>
+                <td>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Coordinator"))
+                    {
+                        <a asp-action="MarkDistributed" asp-route-id="@d.Id" class="btn btn-sm btn-success">Mark Distributed</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

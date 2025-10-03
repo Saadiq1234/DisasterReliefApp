@@ -1,0 +1,27 @@
+@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>Register</h2>
+
+<form method="post" asp-route-returnUrl="@Model.ReturnUrl">
+    <div class="mb-3">
+        <label>Full name</label>
+        <input asp-for="Input.FullName" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Email</label>
+        <input asp-for="Input.Email" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Password</label>
+        <input asp-for="Input.Password" class="form-control" type="password" />
+    </div>
+    <div class="mb-3">
+        <label>Confirm password</label>
+        <input asp-for="Input.ConfirmPassword" class="form-control" type="password" />
+    </div>
+    <button class="btn btn-primary">Register</button>
+</form>

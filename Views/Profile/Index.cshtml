@@ -1,0 +1,19 @@
+@model DisasterReliefApp.Models.ApplicationUser
+
+<h2>My Profile</h2>
+<form asp-action="UpdateName" method="post" class="mb-3">
+    <div class="mb-3">
+        <label>Full name</label>
+        <input name="fullName" value="@Model.FullName" class="form-control" />
+    </div>
+    <button class="btn btn-primary">Update Name</button>
+</form>
+
+<div class="mb-3">
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><a class="btn btn-secondary" href="/Identity/Account/Manage">Manage account (email/password)</a></p>
+</div>
+
+<form asp-action="DeleteAccount" method="post" onsubmit="return confirm('Delete your account? This cannot be undone.');">
+    <button class="btn btn-danger">Delete Account</button>
+</form>
