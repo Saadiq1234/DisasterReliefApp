@@ -6,6 +6,8 @@ using DisasterReliefApp.Models;
 using Microsoft.AspNetCore.Identity;
 using DisasterReliefApp.Models; // For ApplicationUser
 
+// Alias to avoid conflict with System.Threading.Tasks.TaskStatus
+using DRTaskStatus = DisasterReliefApp.Models.TaskStatus;
 
 namespace DisasterReliefApp.Controllers
 {
@@ -17,13 +19,17 @@ namespace DisasterReliefApp.Controllers
 
         public TasksController(ApplicationDbContext context, UserManager<ApplicationUser> um)
         {
-            _context = context; _um = um;
+            _context = context;
+            _um = um;
         }
 
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var list = await _context.TaskAssignments.Include(t => t.AssignedVolunteer).OrderByDescending(t => t.ScheduledAt).ToListAsync();
+            var list = await _context.TaskAssignments
+                                     .Include(t => t.AssignedVolunteer)
+                                     .OrderByDescending(t => t.ScheduledAt)
+                                     .ToListAsync();
             return View(list);
         }
 
@@ -47,10 +53,14 @@ namespace DisasterReliefApp.Controllers
         {
             var user = await _um.GetUserAsync(User);
             var volunteer = await _context.Volunteers.FirstOrDefaultAsync(v => v.UserId == user.Id);
-            if (volunteer == null) return RedirectToAction("Register","Volunteers");
+            if (volunteer == null) return RedirectToAction("Register", "Volunteers");
+
             var task = await _context.TaskAssignments.FindAsync(id);
+
+            // Use the alias to avoid ambiguity
+            task.Status = DRTaskStatus.Assigned;
             task.AssignedVolunteerId = volunteer.Id;
-            task.Status = TaskStatus.Assigned;
+
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }

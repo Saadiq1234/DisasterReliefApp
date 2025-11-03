@@ -7,7 +7,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        sqlOptions =>
+        {
+            sqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5,               // Retry up to 5 times
+                maxRetryDelay: TimeSpan.FromSeconds(10), // Wait 10 seconds between retries
+                errorNumbersToAdd: null          // Additional SQL error numbers (optional)
+            );
+        }
+    )
+);
+
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
